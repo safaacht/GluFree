@@ -25,7 +25,8 @@ class RegisterRequest extends FormRequest
         return [
             'username'=>'required',
             'email'=>['email',Rule::unique("users","email")],
-            'password'=>['required','min:8','confirmed']
+            'password'=>['required','min:8','confirmed'],
+            'role'=>['required|in:client,fournisseur']
             
         ];
     }
