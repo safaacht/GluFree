@@ -26,8 +26,10 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 if(Auth::user()->role=="admin"){
                     return redirect()->route('admin.dashboard');
-                }else{
+                }elseif(Auth::user()->role=="client"){
                     return redirect()->route('client');
+                }else{
+                    return redirect()->route('fournisseur.dashboard');
                 }
             }else{
             return redirect()->back()->with("error","Email or password is incorrect");
