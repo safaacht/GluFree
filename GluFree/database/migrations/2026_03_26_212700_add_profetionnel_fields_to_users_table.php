@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('tel')->nullable()->unique();
             $table->string('cin')->nullable()->unique();
             $table->string('ice')->nullable()->unique();
-            $table->enum('status',['en attente','accepté','refusé'])->nullable()
-                  ->default('en attente');
             $table->foreignId('city_id')->nullable()->constrained('city')->nullOnDelete();
         });
     }
@@ -28,7 +25,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['city_id']);
-            $table->dropColumn(['tel', 'cin', 'ice', 'city_id','status']);
+            
         });
     }
 };
