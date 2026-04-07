@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Container\Attributes\Auth as AttributesAuth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response as FacadesResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+class ClientMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if(Auth::check() && Auth::user()->role==='client'){
+            return $next($request);
+        }    
+
+        abort(403, 'Forbidden');
+    }
+}
