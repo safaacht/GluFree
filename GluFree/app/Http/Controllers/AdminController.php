@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +13,7 @@ class AdminController extends Controller
     public function dashboard()
     {
         $stats = [
-            // 'total_Fournisseur' => Fournisseur::count(),
+            'total_Fournisseur' => Fournisseur::count(),
             'total_products' => Product::count(),
             'total_categories' => Category::count(),
             'total_users' => User::count(),
