@@ -31,6 +31,9 @@ class RegisterController extends Controller
         ]);
 
         Auth::login($user);
+        if($user->role === 'fournisseur' && $user->status === 'accepté'){
+            return redirect()->route('fournisseur.index');
+        }
         return redirect()->route('product.index');
     }
 }
