@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Fournisseur;
 
 use Illuminate\Http\Request;
 
@@ -8,7 +9,16 @@ class FournisseurController extends Controller
 {
     public function index()
     {
-        return view('fournisseur.dashboard');
+        $products = collect();
+        $total_products = 0;
+        if (auth()->check()) {
+            $fournisseur = Fournisseur::find(auth()->id());
+            if ($fournisseur) {
+                $products = $fournisseur->produits;
+                $total_products = $fournisseur->produits->count();
+            }
+        }
+        return view('fournisseur.dashboard', compact('products', 'total_products'));
     }
 
     public function create()
