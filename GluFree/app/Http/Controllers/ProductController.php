@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\ProductService;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\City;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -16,9 +17,11 @@ class ProductController extends Controller
     {
         $search= $request->query("search");
         $category= $request->query("category");
-        $products= $productService->getProductsBy($search,$category);
+        $city = $request->query("city");
+        $products= $productService->getProductsBy($search,$category,$city);
         $categories=Category::all();
-        return view('product.index',compact('products','categories'));
+        $cities = City::all();
+        return view('product.index',compact('products','categories', 'cities'));
     }
 
     /**
@@ -26,6 +29,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->role === 'fournisseur' && auth()->user()->status !== 'accepté') {
+            return redirect()->back()->with('error', 'Votre compte est en attente de validation par l\'administrateur.');
+        }
+
         $categories = Category::all();
         return view('product.create', compact('categories'));
     }
@@ -35,23 +42,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->role === 'fournisseur' && auth()->user()->status !== 'accepté') {
+            return redirect()->back()->with('error', 'Votre compte est en attente de validation par l\'administrateur.');
+        }
+
         $product=new Product();
         $product->name=$request['name'];
         $product->description=$request['description'];
-        $product->price=$request['price'];
-        $product->quantitéStock=$request['quantitéStock'];
         $product->category_id=$request['category_id'];
-        $product->photo=$request['photo'];
-        $product->certificationSansGluten=$request['certificationSansGluten'];
+        
+        if ($request->hasFile('photo')) {
+            $product->photo = $request->file('photo')->store('products', 'public');
+        }
+
+        $product->certificationSansGluten = $request->has('certificationSansGluten') ? 1 : 0;
         $product->save();
 
-            return redirect()->route('products.index')->with('success', 'Produit ajouté avec succès !');
+        if (auth()->user()->role === 'fournisseur') {
+            auth()->user()->produits()->attach($product->id, [
+                'qteStock' => $request['quantitéStock'],
+                'prix' => $request['price']
+            ]);
+        }
+
+        return redirect()->route('product.index')->with('success', 'Produit ajouté avec succès !');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show($id)
     {
         $product=Product::findOrFail($id);
         return view('product.show',compact('product'));
@@ -60,8 +80,12 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit($id)
     {
+        if (auth()->user()->role === 'fournisseur' && auth()->user()->status !== 'accepté') {
+            return redirect()->back()->with('error', 'Votre compte est en attente de validation par l\'administrateur.');
+        }
+
         $categories = Category::all();
         $product=Product::findOrFail($id);
         return view('product.edit',compact('product', 'categories')); 
@@ -71,30 +95,47 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
-        $product=new Product();
+        if (auth()->user()->role === 'fournisseur' && auth()->user()->status !== 'accepté') {
+            return redirect()->back()->with('error', 'Votre compte est en attente de validation par l\'administrateur.');
+        }
+
+        $product=Product::findOrFail($id);
         $product->name=$request['name'];
         $product->description=$request['description'];
-        $product->price=$request['price'];
-        $product->quantitéStock=$request['quantitéStock'];
         $product->category_id=$request['category_id'];
-        $product->photo=$request['photo'];
-        $product->certificationSansGluten=$request['certificationSansGluten'];
+        
+        if ($request->hasFile('photo')) {
+            $product->photo = $request->file('photo')->store('products', 'public');
+        }
+
+        $product->certificationSansGluten = $request->has('certificationSansGluten') ? 1 : 0;
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès !');
+        if (auth()->check() && auth()->user()->role === 'fournisseur') {
+            auth()->user()->produits()->syncWithoutDetaching([
+                $product->id => [
+                    'qteStock' => $request['quantitéStock'] ?? 0,
+                    'prix' => $request['price'] ?? 0
+                ]
+            ]);
+        }
 
-    }
+        return redirect()->route('product.index')->with('success', 'Produit mis à jour avec succès !');    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy($id)
     {
+        if (auth()->user()->role === 'fournisseur' && auth()->user()->status !== 'accepté') {
+            return redirect()->back()->with('error', 'Votre compte est en attente de validation par l\'administrateur.');
+        }
+
         $product=Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès !');
+        return redirect()->route('product.index')->with('success', 'Produit supprimé avec succès !');
     
     }
 }
