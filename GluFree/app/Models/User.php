@@ -75,19 +75,5 @@ class User extends Authenticatable
                     ->withTimestamps();
     }
 
-    // public function isAdmin()
-    // {
-    //     return $this->role === 'admin';
-    // }
-
-    // public function isClient()
-    // {
-    //     return $this->role === 'client';
-    // }
-
-    // public function isFournisseur()
-    // {
-    //     return $this->role === 'fournisseur';
-    // }
-
+   
 }
