@@ -46,7 +46,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <!-- Left Column: Image -->
             <div class="lg:col-span-12 xl:col-span-7">
                 <div class="sticky top-32 space-y-8">
                     <div class="relative aspect-square sm:aspect-[4/3] lg:aspect-square bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-stone-200/50 border border-stone-100 flex items-center justify-center p-12 lg:p-20">
@@ -73,7 +72,7 @@
                 </div>
             </div>
 
-            <!-- Right Column: Details -->
+            <!-- details -->
             <div class="lg:col-span-12 xl:col-span-5 flex flex-col space-y-10">
                 <div class="space-y-6">
                     <h1 class="font-serif text-5xl lg:text-6xl font-extrabold text-forest leading-tight">{{ $product->name }}</h1>
@@ -131,7 +130,6 @@
                 </form>
                 @endif
 
-                <!-- Features/Badges Grid -->
                 <div class="grid grid-cols-2 gap-4 mt-6">
                     <div class="flex items-center gap-3 p-4 bg-stone-50 rounded-2xl border border-stone-100">
                         <i class="fa-solid fa-truck text-emerald-600"></i>

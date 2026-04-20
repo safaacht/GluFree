@@ -3,7 +3,7 @@
 @section('content')
 <div class="min-h-screen bg-[#FCFBFA] py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
-        <!-- Header & Search Section -->
+                <!-- header and search section -->
         <div class="mb-12 flex flex-col md:flex-row justify-between items-end gap-6 border-b border-stone-200 pb-8">
             <div class="text-center md:text-left flex-1">
                 <h1 class="font-serif text-5xl font-extrabold text-forest mb-4 leading-tight">Découvrez Notre<br><span class="text-emerald-700 italic">Catalogue</span></h1>
@@ -17,7 +17,7 @@
                     </a>
                 @endif
 
-                <!-- Filters & Search -->
+                <!-- Filters & search -->
                 <form method="GET" action="{{ route('product.index') }}" class="w-full flex flex-col sm:flex-row gap-4 items-center bg-white p-3 rounded-2xl shadow-xl shadow-stone-200/50 border border-stone-100">
                     <div class="relative w-full sm:w-64">
                         <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
@@ -56,7 +56,7 @@
         </div>
 
         @if(isset($products) && $products->count() > 0)
-            <!-- Products Grid -->
+            <!-- Products grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 @foreach($products as $product)
                     <div class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-forest/10 transition-all duration-500 border border-stone-100 flex flex-col h-full transform hover:-translate-y-1">
@@ -77,7 +77,7 @@
                         </div>
                         @endif
 
-                        <!-- Image Container -->
+                        <!-- image container -->
                         <div class="relative h-64 overflow-hidden bg-stone-50 flex items-center justify-center p-6">
                             @if($product->photo)
                                 <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 ease-in-out">
@@ -87,7 +87,7 @@
                                 </div>
                             @endif
                             
-                            <!-- Badges -->
+                            <!-- badges -->
                             <div class="absolute top-4 left-4 flex flex-col gap-2 z-10">
                                 <span class="bg-forest text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md backdrop-blur-md">
                                     {{ $product->category->name ?? 'Général' }}
@@ -127,9 +127,8 @@
                             @endif
                         </div>
 
-                        <!-- Content -->
+                        <!-- content -->
                         <div class="p-6 flex-1 flex flex-col">
-                            <!-- Stock Status Indicator -->
                             <div class="flex items-center gap-2 mb-3">
                                 {{-- Get stock from pivot if available --}}
                             @php
@@ -190,7 +189,7 @@
                 @endforeach
             </div>
 
-            <!-- Pagination (if applicable) -->
+            <!-- pagination -->
             @if(method_exists($products, 'links'))
                 <div class="mt-16 flex justify-center">
                     {{ $products->links() }}
@@ -198,7 +197,6 @@
             @endif
 
         @else
-            <!-- Empty State -->
             <div class="bg-white rounded-3xl p-16 text-center border border-stone-200 shadow-sm mt-8 flex flex-col justify-center items-center min-h-[400px]">
                 <div class="w-32 h-32 bg-stone-50 rounded-full flex items-center justify-center mb-6">
                     <i class="fa-solid fa-basket-shopping text-4xl text-stone-300"></i>

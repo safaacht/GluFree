@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <!-- Media & Certification Card -->
+            <!-- media et certif carte-->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="bg-white rounded-3xl p-8 shadow-xl shadow-stone-200/50 border border-stone-100">
                     <div class="flex items-center gap-4 mb-8">
@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-            <!-- Inventory & Price (Supplier Only) -->
+            <!-- (fournisseur seulement) -->
             @auth
             @php
                 $myPivot = $product->fournisseurs()->where('fournisseur_id', auth()->id())->first()?->pivot;
@@ -144,7 +144,6 @@
             @endif
             @endauth
 
-            <!-- Submit Section -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6">
                 <a href="{{ route('product.index') }}" class="text-stone-400 hover:text-forest font-bold uppercase tracking-widest text-[11px] transition-colors flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Retour au catalogue

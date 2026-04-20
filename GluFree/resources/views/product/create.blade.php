@@ -18,7 +18,7 @@
         <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="space-y-10">
             @csrf
 
-            <!-- Main Information Card -->
+            <!-- main card -->
             <div class="bg-white rounded-3xl p-8 lg:p-12 shadow-xl shadow-stone-200/50 border border-stone-100 transition-all hover:shadow-2xl">
                 <div class="flex items-center gap-4 mb-10 pb-6 border-b border-stone-50">
                     <div class="w-12 h-12 bg-forest/5 rounded-2xl flex items-center justify-center text-forest">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <!-- Media & Certification Card -->
+            <!-- media et certif carte-->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="bg-white rounded-3xl p-8 shadow-xl shadow-stone-200/50 border border-stone-100">
                     <div class="flex items-center gap-4 mb-8">
@@ -107,7 +107,6 @@
                 </div>
             </div>
 
-            <!-- Inventory & Price (Supplier Only) -->
             @if(auth()->user()->role === 'fournisseur')
             <div class="bg-forest rounded-3xl p-8 lg:p-12 shadow-2xl shadow-emerald-900/20 text-white">
                 <div class="flex items-center gap-4 mb-10 pb-6 border-b border-white/10">
@@ -139,7 +138,7 @@
             </div>
             @endif
 
-            <!-- Submit Section -->
+            <!-- submit -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6">
                 <a href="{{ route('product.index') }}" class="text-stone-400 hover:text-forest font-bold uppercase tracking-widest text-[11px] transition-colors flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Retour au catalogue
