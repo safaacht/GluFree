@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Fournisseur;
+use App\Models\FournisseurProduit;
+use App\Models\Commande;
 
 use Illuminate\Http\Request;
 
@@ -19,6 +21,26 @@ class FournisseurController extends Controller
             }
         }
         return view('fournisseur.dashboard', compact('products', 'total_products'));
+    }
+
+    public function commandes()
+    {
+        // Get all FournisseurProduit records belonging to this fournisseur
+        $fournisseurProduitIds = FournisseurProduit::where('fournisseur_id', auth()->id())
+            ->pluck('id');
+
+        // Load all commandes that have at least one item from this fournisseur
+        $commandes = Commande::whereHas('items', function ($q) use ($fournisseurProduitIds) {
+                $q->whereIn('fournisseur_produit_id', $fournisseurProduitIds);
+            })
+            ->with(['items' => function ($q) use ($fournisseurProduitIds) {
+                $q->whereIn('fournisseur_produit_id', $fournisseurProduitIds)
+                  ->with('product');
+            }, 'user'])
+            ->latest()
+            ->get();
+
+        return view('fournisseur.commandes', compact('commandes'));
     }
 
     public function create()
