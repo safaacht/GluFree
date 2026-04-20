@@ -16,6 +16,13 @@
 
         <form action="{{ route('login.store') }}" method="POST" class="space-y-6 relative z-10">
             @csrf
+
+            @if(session('error'))
+                <div class="bg-red-50 border border-red-100 text-red-600 text-[12px] font-semibold px-6 py-4 rounded-2xl flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div>
                 <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">Adresse Email</label>
                 <input type="email" name="email" required 
@@ -30,10 +37,10 @@
                        placeholder="••••••••">
             </div>
 
-            <a href="{{ route('product.index') }}" 
-               class="flex items-center justify-center w-full bg-forest text-white py-5 rounded-full font-bold uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-emerald-900/10 hover:bg-emerald-900 hover:-translate-y-0.5 transition-all duration-300 mt-4 no-underline">
+            <button type="submit"
+               class="flex items-center justify-center w-full bg-forest text-white py-5 rounded-full font-bold uppercase tracking-[0.2em] text-[11px] shadow-xl shadow-emerald-900/10 hover:bg-emerald-900 hover:-translate-y-0.5 transition-all duration-300 mt-4">
                 Se Connecter
-            </a>
+            </button>
         </form>
 
         <p class="mt-10 text-center text-[11px] text-stone-400 font-bold uppercase tracking-widest">
