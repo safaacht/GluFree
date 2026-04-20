@@ -21,7 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'tel',
+        'cin',
+        'ice',
+        'city_id',
+        'status',
+        'password_confirmation',
     ];
 
     /**
@@ -46,4 +52,42 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function favoris()
+    {
+        return $this->belongsToMany(Product::class, 'favoris', 'user_id', 'product_id');
+    }
+
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function produits()
+    {
+        return $this->belongsToMany(Product::class, 'fournisseurProduit', 'fournisseur_id', 'product_id')
+                    ->withPivot('qteStock', 'prix')
+                    ->withTimestamps();
+    }
+
+    // public function isAdmin()
+    // {
+    //     return $this->role === 'admin';
+    // }
+
+    // public function isClient()
+    // {
+    //     return $this->role === 'client';
+    // }
+
+    // public function isFournisseur()
+    // {
+    //     return $this->role === 'fournisseur';
+    // }
+
 }
