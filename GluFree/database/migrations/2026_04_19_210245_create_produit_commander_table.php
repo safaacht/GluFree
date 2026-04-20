@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('ProduitCommander', function (Blueprint $table) {
-            // Drop foreign keys first. Laravel typically uses table_column_foreign format.
             $table->dropForeign(['product_id']);
             $table->dropForeign(['fournisseur_id']);
             
             $table->dropColumn(['product_id', 'fournisseur_id', 'qte_commander']);
             
-            // Add the new columns
+            
             $table->foreignId('fournisseur_produit_id')->after('commande_id')->constrained('fournisseurProduit')->onDelete('cascade');
             $table->integer('qte')->after('fournisseur_produit_id')->default(1);
         });
