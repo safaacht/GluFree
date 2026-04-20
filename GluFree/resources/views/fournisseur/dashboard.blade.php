@@ -7,9 +7,14 @@
             <span class="text-emerald-700 font-bold uppercase tracking-[0.2em] text-[10px] mb-2 block">Ma Boutique</span>
             <h1 class="font-serif text-4xl text-forest italic">Espace Fournisseur</h1>
         </div>
-        <a href="{{ route('product.create') }}" class="bg-forest text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg hover:bg-emerald-900 transition-all">
-            + Nouveau Produit
-        </a>
+        <div class="flex items-center gap-4">
+            <a href="{{ route('fournisseur.commandes') }}" class="border-2 border-forest text-forest px-6 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-forest hover:text-white transition-all flex items-center gap-2">
+                <i class="fa-solid fa-inbox"></i> Commandes reçues
+            </a>
+            <a href="{{ route('product.create') }}" class="bg-forest text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg hover:bg-emerald-900 transition-all">
+                + Nouveau Produit
+            </a>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
