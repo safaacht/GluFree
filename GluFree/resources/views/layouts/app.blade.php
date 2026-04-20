@@ -41,6 +41,7 @@
                     <a href="{{ route('admin.dashboard') }}" class="hover:text-forest transition">Gestion Admin</a>
                 @elseif(auth()->user()->role === 'fournisseur')
                     <a href="{{ route('fournisseur.index') }}" class="text-emerald-800">Espace Fournisseur</a>
+                    <a href="{{ route('fournisseur.commandes') }}" class="hover:text-forest transition">Commandes</a>
                 @elseif(auth()->user()->role === 'client')
                     <a href="{{ route('product.index') }}" class="hover:text-forest transition">Catalogue</a>
                     <a href="{{ route('favoris.index') }}" class="hover:text-forest transition">Favoris</a>
