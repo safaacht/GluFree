@@ -40,7 +40,13 @@
                 @if(auth()->user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="hover:text-forest transition">Gestion Admin</a>
                 @elseif(auth()->user()->role === 'fournisseur')
-                    <a href="{{ route('fournisseur.dashboard') }}" class="text-emerald-800">Espace Fournisseur</a>
+                    <a href="{{ route('fournisseur.index') }}" class="text-emerald-800">Espace Fournisseur</a>
+                    <a href="{{ route('fournisseur.commandes') }}" class="hover:text-forest transition">Commandes</a>
+                @elseif(auth()->user()->role === 'client')
+                    <a href="{{ route('product.index') }}" class="hover:text-forest transition">Catalogue</a>
+                    <a href="{{ route('favoris.index') }}" class="hover:text-forest transition">Favoris</a>
+                    <a href="{{ route('commande.index') }}" class="hover:text-forest transition">Mes Commandes</a>
+                    <a href="{{ route('panier.index') }}" class="hover:text-forest transition"><i class="fa-solid fa-cart-shopping"></i> Panier</a>
                 @endif
             @endauth
         </div>
@@ -57,7 +63,7 @@
                     </form>
                 </div>
             @else
-                <a href="{{ route('login.create') }}" class="text-sm font-semibold text-stone-600 hover:text-forest transition">Connexion</a>
+                <a href="{{ route('login') }}" class="text-sm font-semibold text-stone-600 hover:text-forest transition">Connexion</a>
                 <a href="{{ route('register.create') }}" class="btn-elegant text-white px-7 py-2.5 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-xl shadow-emerald-900/10">
                     Rejoindre
                 </a>
