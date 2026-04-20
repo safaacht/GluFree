@@ -45,10 +45,42 @@
                     <input type="email" name="email" required class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
                 </div>
             </div>
-            
-            <div class="mb-10">
-                <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">Mot de passe</label>
-                <input type="password" name="password" required class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
+            <div class="mb-6">
+                <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">Téléphone</label>
+                <input type="text" name="tel" required class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
+            </div>
+
+            <!-- fournisseur fields -->
+            <div id="fournisseur-fields" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">CIN</label>
+                        <input type="text" name="cin" class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">ICE</label>
+                        <input type="text" name="ice" class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">Ville</label>
+                    <select name="city_id" class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all cursor-pointer">
+                        <option value="">Sélectionnez une ville</option>
+                        @foreach($cities as $city)
+                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">Mot de passe</label>
+                    <input type="password" name="password" required class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-2 ml-4">Confirmer le mot de passe</label>
+                    <input type="password" name="password_confirmation" required class="w-full px-7 py-4 bg-stone-50 border-none rounded-full text-sm outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all">
+                </div>
             </div>
 
             <button class="w-full bg-forest text-white py-5 rounded-full font-bold uppercase tracking-[0.2em] text-[11px] shadow-2xl shadow-emerald-900/20 hover:bg-emerald-900 hover:-translate-y-1 transition-all duration-300">
@@ -58,8 +90,30 @@
 
         <p class="mt-10 text-center text-[11px] text-stone-400 font-bold uppercase tracking-widest">
             Déjà membre ? 
-            <a href="{{ route('login.create') }}" class="text-emerald-800 ml-1 hover:underline underline-offset-4 decoration-emerald-200">Se connecter</a>
+            <a href="{{ route('login') }}" class="text-emerald-800 ml-1 hover:underline underline-offset-4 decoration-emerald-200">Se connecter</a>
         </p>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const roleRadios = document.querySelectorAll('input[name="role"]');
+        const fournisseurFields = document.getElementById('fournisseur-fields');
+
+        function toggleFields() {
+            const isFournisseur = document.querySelector('input[name="role"]:checked').value === 'fournisseur';
+            if (isFournisseur) {
+                fournisseurFields.classList.remove('hidden');
+            } else {
+                fournisseurFields.classList.add('hidden');
+            }
+        }
+
+        roleRadios.forEach(radio => {
+            radio.addEventListener('change', toggleFields);
+        });
+
+        toggleFields();
+    });
+</script>
 @endsection
