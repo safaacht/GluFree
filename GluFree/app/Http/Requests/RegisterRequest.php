@@ -23,11 +23,14 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username'=>'required',
+            'name'=>'required',
             'email'=>['email',Rule::unique("users","email")],
             'password'=>['required','min:8','confirmed'],
-            'role'=>['required|in:client,fournisseur']
-            
+            'role'=>['required', 'in:client,fournisseur'],
+            'tel'=>['required'],
+            'cin'=>['nullable', 'required_if:role,fournisseur'],
+            'ice'=>['nullable', 'required_if:role,fournisseur'],
+            'city_id'=>['nullable', 'required_if:role,fournisseur']
         ];
     }
 }

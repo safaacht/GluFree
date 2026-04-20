@@ -13,24 +13,29 @@ class LoginController extends Controller
     public function create(){
         return view('auth.login');
     }
+
+
     public function store(LoginRequest $request){
-        $check= Auth::attempt([
-        
+        $check= Auth::attempt([      
             'email'=>$request->email,
             'password'=>$request->password
         ]);
 
-        
-        
         if($check){
                 $request->session()->regenerate();
                 if(Auth::user()->role=="admin"){
                     return redirect()->route('admin.dashboard');
+                }elseif(Auth::user()->role=="fournisseur"){
+                    if(Auth::user()->status === 'accepté') {
+                        return redirect()->route('fournisseur.index');
+                    } else {
+                        return redirect()->route('product.index');
+                    }
                 }else{
-                    return redirect()->route('client');
+                    return redirect()->route('product.index');
                 }
             }else{
-            return redirect()->back()->with("error","Email or password is incorrect");
+            return redirect()->back()->with("error","Email ou mot de passe est incorrecte");
 
         }
     }
@@ -41,6 +46,6 @@ class LoginController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->route('login.create');
+        return redirect()->route('login');
     }
 }
