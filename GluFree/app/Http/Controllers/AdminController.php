@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,15 +13,34 @@ class AdminController extends Controller
     public function dashboard()
     {
         $stats = [
-            // 'total_Fournisseur' => Fournisseur::count(),
+            'total_Fournisseur' => Fournisseur::count(),
             'total_products' => Product::count(),
             'total_categories' => Category::count(),
             'total_users' => User::count(),
         ];
 
-        $products = Product::with('category')->latest()->take(10)->get();
+        $fournisseurs = Fournisseur::latest()->get();
+        $products = Product::with('category')->latest()->get();
         $categories = Category::all();
 
-        return view('admin.dashboard', compact('stats', 'products', 'categories'));
+        return view('admin.dashboard', compact('stats', 'products', 'categories', 'fournisseurs'));
+    }
+
+    public function acceptFournisseur(Fournisseur $fournisseur)
+    {
+        $fournisseur->update(['status' => 'accepté']);
+        return back()->with('success', 'Fournisseur accepté avec succès.');
+    }
+
+    public function refuserFournisseur(Fournisseur $fournisseur)
+    {
+        $fournisseur->update(['status' => 'refusé']);
+        return back()->with('success', 'Fournisseur refusé.');
+    }
+
+    public function deleteProduct(Product $product)
+    {
+        $product->delete();
+        return back()->with('success', 'Produit supprimé.');
     }
 }
