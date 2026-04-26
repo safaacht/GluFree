@@ -16,8 +16,8 @@ class FournisseurController extends Controller
         if (auth()->check()) {
             $fournisseur = Fournisseur::find(auth()->id());
             if ($fournisseur) {
-                $products = $fournisseur->produits;
-                $total_products = $fournisseur->produits->count();
+                $products = $fournisseur->produits()->paginate(10);
+                $total_products = $fournisseur->produits()->count();
             }
         }
         return view('fournisseur.dashboard', compact('products', 'total_products'));
@@ -38,7 +38,7 @@ class FournisseurController extends Controller
                   ->with('product');
             }, 'user'])
             ->latest()
-            ->get();
+            ->paginate(5);
 
         return view('fournisseur.commandes', compact('commandes'));
     }

@@ -127,6 +127,51 @@
                 @endforeach
             </div>
 
+            {{-- Pagination --}}
+            @if($commandes->hasPages())
+                <div class="mt-10 flex justify-center">
+                    <nav class="flex items-center gap-1">
+                        {{-- Previous --}}
+                        @if($commandes->onFirstPage())
+                            <span class="px-4 py-2 rounded-xl text-stone-300 bg-white border border-stone-100 text-sm font-bold cursor-not-allowed select-none">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                        @else
+                            <a href="{{ $commandes->previousPageUrl() }}"
+                               class="px-4 py-2 rounded-xl text-forest bg-white border border-stone-100 text-sm font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </a>
+                        @endif
+
+                        {{-- Page Numbers --}}
+                        @foreach($commandes->getUrlRange(1, $commandes->lastPage()) as $page => $url)
+                            @if($page == $commandes->currentPage())
+                                <span class="px-4 py-2 rounded-xl bg-forest text-white text-sm font-bold shadow-sm">
+                                    {{ $page }}
+                                </span>
+                            @else
+                                <a href="{{ $url }}"
+                                   class="px-4 py-2 rounded-xl text-forest bg-white border border-stone-100 text-sm font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">
+                                    {{ $page }}
+                                </a>
+                            @endif
+                        @endforeach
+
+                        {{-- Next --}}
+                        @if($commandes->hasMorePages())
+                            <a href="{{ $commandes->nextPageUrl() }}"
+                               class="px-4 py-2 rounded-xl text-forest bg-white border border-stone-100 text-sm font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        @else
+                            <span class="px-4 py-2 rounded-xl text-stone-300 bg-white border border-stone-100 text-sm font-bold cursor-not-allowed select-none">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        @endif
+                    </nav>
+                </div>
+            @endif
+
         @else
             <div class="bg-white p-16 rounded-[2rem] shadow-sm border border-stone-100 flex flex-col items-center justify-center space-y-6 text-center">
                 <div class="h-24 w-24 bg-stone-50 rounded-full flex items-center justify-center">

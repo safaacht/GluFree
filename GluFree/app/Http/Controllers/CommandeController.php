@@ -10,7 +10,7 @@ class CommandeController extends Controller
 {
     public function index()
     {
-        $commandes = auth()->user()->commandes()->with('items.product')->latest()->get();
+        $commandes = auth()->user()->commandes()->with('items.product')->latest()->paginate(5);
         return view('commande.index', compact('commandes'));
     }
 

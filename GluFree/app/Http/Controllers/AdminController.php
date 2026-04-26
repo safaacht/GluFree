@@ -19,8 +19,8 @@ class AdminController extends Controller
             'total_users' => User::count(),
         ];
 
-        $fournisseurs = Fournisseur::latest()->get();
-        $products = Product::with('category')->latest()->get();
+        $fournisseurs = Fournisseur::latest()->paginate(10, ['*'], 'fournisseurs_page');
+        $products = Product::with('category')->latest()->paginate(10, ['*'], 'products_page');
         $categories = Category::all();
 
         return view('admin.dashboard', compact('stats', 'products', 'categories', 'fournisseurs'));
