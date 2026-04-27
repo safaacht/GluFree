@@ -190,47 +190,9 @@
             </div>
 
             <!-- pagination -->
-            @if($products->hasPages())
+            @if(method_exists($products, 'links'))
                 <div class="mt-16 flex justify-center">
-                    <nav class="flex items-center gap-1">
-                        <!-- previous -->
-                        @if($products->onFirstPage())
-                            <span class="px-4 py-2 rounded-xl text-stone-300 bg-white border border-stone-100 text-sm font-bold cursor-not-allowed select-none">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                        @else
-                            <a href="{{ $products->previousPageUrl() }}"
-                               class="px-4 py-2 rounded-xl text-forest bg-white border border-stone-100 text-sm font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </a>
-                        @endif
-
-                        <!-- nbr pages -->
-                        @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                            @if($page == $products->currentPage())
-                                <span class="px-4 py-2 rounded-xl bg-forest text-white text-sm font-bold shadow-sm">
-                                    {{ $page }}
-                                </span>
-                            @else
-                                <a href="{{ $url }}"
-                                   class="px-4 py-2 rounded-xl text-forest bg-white border border-stone-100 text-sm font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">
-                                    {{ $page }}
-                                </a>
-                            @endif
-                        @endforeach
-
-                        <!-- next -->
-                        @if($products->hasMorePages())
-                            <a href="{{ $products->nextPageUrl() }}"
-                               class="px-4 py-2 rounded-xl text-forest bg-white border border-stone-100 text-sm font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        @else
-                            <span class="px-4 py-2 rounded-xl text-stone-300 bg-white border border-stone-100 text-sm font-bold cursor-not-allowed select-none">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </span>
-                        @endif
-                    </nav>
+                    {{ $products->links() }}
                 </div>
             @endif
 

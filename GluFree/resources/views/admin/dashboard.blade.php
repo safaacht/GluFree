@@ -97,34 +97,7 @@
         </table>
     </div>
 
-     <!-- pagination -->
-    @if($fournisseurs->hasPages())
-        <div class="mb-10 flex justify-center">
-            <nav class="flex items-center gap-1">
-                @if($fournisseurs->onFirstPage())
-                    <span class="px-3 py-1.5 rounded-lg text-stone-300 bg-white border border-stone-100 text-xs font-bold cursor-not-allowed select-none"><i class="fa-solid fa-chevron-left"></i></span>
-                @else
-                    <a href="{{ $fournisseurs->previousPageUrl() }}" class="px-3 py-1.5 rounded-lg text-forest bg-white border border-stone-100 text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm"><i class="fa-solid fa-chevron-left"></i></a>
-                @endif
-
-                @foreach($fournisseurs->getUrlRange(1, $fournisseurs->lastPage()) as $page => $url)
-                    @if($page == $fournisseurs->currentPage())
-                        <span class="px-3 py-1.5 rounded-lg bg-forest text-white text-xs font-bold shadow-sm">{{ $page }}</span>
-                    @else
-                        <a href="{{ $url }}" class="px-3 py-1.5 rounded-lg text-forest bg-white border border-stone-100 text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">{{ $page }}</a>
-                    @endif
-                @endforeach
-
-                @if($fournisseurs->hasMorePages())
-                    <a href="{{ $fournisseurs->nextPageUrl() }}" class="px-3 py-1.5 rounded-lg text-forest bg-white border border-stone-100 text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm"><i class="fa-solid fa-chevron-right"></i></a>
-                @else
-                    <span class="px-3 py-1.5 rounded-lg text-stone-300 bg-white border border-stone-100 text-xs font-bold cursor-not-allowed select-none"><i class="fa-solid fa-chevron-right"></i></span>
-                @endif
-            </nav>
-        </div>
-    @endif
-
-     <!-- Produits -->
+      {{-- Produits  --}}
     <div class="bg-white rounded-[2.5rem] border border-stone-100 shadow-sm overflow-hidden">
         <div class="px-10 py-6 border-b border-stone-50">
             <h3 class="font-serif text-xl text-forest italic">Produits &mdash; Gestion</h3>
@@ -158,33 +131,6 @@
             </tbody>
         </table>
     </div>
-
-     <!-- pagination pour les produits-->
-    @if($products->hasPages())
-        <div class="mt-8 flex justify-center">
-            <nav class="flex items-center gap-1">
-                @if($products->onFirstPage())
-                    <span class="px-3 py-1.5 rounded-lg text-stone-300 bg-white border border-stone-100 text-xs font-bold cursor-not-allowed select-none"><i class="fa-solid fa-chevron-left"></i></span>
-                @else
-                    <a href="{{ $products->previousPageUrl() }}" class="px-3 py-1.5 rounded-lg text-forest bg-white border border-stone-100 text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm"><i class="fa-solid fa-chevron-left"></i></a>
-                @endif
-
-                @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                    @if($page == $products->currentPage())
-                        <span class="px-3 py-1.5 rounded-lg bg-forest text-white text-xs font-bold shadow-sm">{{ $page }}</span>
-                    @else
-                        <a href="{{ $url }}" class="px-3 py-1.5 rounded-lg text-forest bg-white border border-stone-100 text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm">{{ $page }}</a>
-                    @endif
-                @endforeach
-
-                @if($products->hasMorePages())
-                    <a href="{{ $products->nextPageUrl() }}" class="px-3 py-1.5 rounded-lg text-forest bg-white border border-stone-100 text-xs font-bold hover:bg-emerald-50 hover:border-emerald-200 transition-colors shadow-sm"><i class="fa-solid fa-chevron-right"></i></a>
-                @else
-                    <span class="px-3 py-1.5 rounded-lg text-stone-300 bg-white border border-stone-100 text-xs font-bold cursor-not-allowed select-none"><i class="fa-solid fa-chevron-right"></i></span>
-                @endif
-            </nav>
-        </div>
-    @endif
 
 </div>
 @endsection
