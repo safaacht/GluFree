@@ -32,6 +32,11 @@ Route::controller(LoginController::class)->group(function(){
 
 // Fournisseur
 Route::resource('fournisseur', FournisseurController::class);
+Route::resource('product', ProductController::class)->except(['index', 'show']);
+
+// Fournisseur — commandes 
+Route::get('/fournisseur-commandes', [FournisseurController::class, 'commandes'])->name('fournisseur.commandes');
+Route::patch('/commande/{commande}/accepter', [CommandeController::class, 'accepter'])->name('commande.accepter');
 
 // Visiteur
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
@@ -40,7 +45,6 @@ Route::get('/product/{product}', [ProductController::class, 'show'])->name('prod
 
 // Client
 Route::middleware('auth')->group(function () {
-    Route::resource('product', ProductController::class)->except(['index', 'show']);
     Route::get('/profile', [UserContoller::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [UserContoller::class, 'updateProfile'])->name('profile.update');
 
@@ -58,10 +62,6 @@ Route::middleware('auth')->group(function () {
     // Commande
     Route::get('/commande', [CommandeController::class, 'index'])->name('commande.index');
     Route::post('/commande', [CommandeController::class, 'store'])->name('commande.store');
-
-    // Fournisseur — commandes 
-    Route::get('/fournisseur-commandes', [FournisseurController::class, 'commandes'])->name('fournisseur.commandes');
-    Route::patch('/commande/{commande}/accepter', [CommandeController::class, 'accepter'])->name('commande.accepter');
 
 });
 
