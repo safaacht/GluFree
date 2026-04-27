@@ -27,7 +27,7 @@ class CommandeController extends Controller
             $total += $item['prix'] * $item['quantity'];
         }
 
-        // Create the Commande
+        
         $commande = Commande::create([
             'user_id' => auth()->id(),
             'total_general' => $total,
@@ -35,17 +35,17 @@ class CommandeController extends Controller
         ]);
 
         foreach($cart as $item) {
-            // Find the precise inventory record for this supplier and product
+            // finding the fournisseur and product id
             $fournisseurProduit = FournisseurProduit::where('product_id', $item['product_id'])
                                     ->where('fournisseur_id', $item['fournisseur_id'])
                                     ->first();
 
             if ($fournisseurProduit && $fournisseurProduit->qteStock >= $item['quantity']) {
-                // Deduct stock
+                // Retirer du stock
                 $fournisseurProduit->qteStock -= $item['quantity'];
                 $fournisseurProduit->save();
 
-                // Attach to order via our new pivot structure
+                //Attach to order via pivot tableau
                 $commande->items()->attach($fournisseurProduit->id, [
                     'qte' => $item['quantity'],
                     'total_commande' => $item['prix'] * $item['quantity']
@@ -53,15 +53,13 @@ class CommandeController extends Controller
             }
         }
 
-        // Empty the cart
+        // Emptying the cart
         session()->forget('panier');
 
         return redirect()->route('commande.index')->with('success', 'Votre commande a été passée avec succès !');
     }
 
-    /**
-     * Fournisseur accepts an order — status becomes livrée.
-     */
+    // changement du statut aprés l'acceptation du commande
     public function accepter(Commande $commande)
     {
         $commande->update(['status' => 'livrée']);

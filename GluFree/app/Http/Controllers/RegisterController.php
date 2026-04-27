@@ -27,7 +27,6 @@ class RegisterController extends Controller
             'ice'=>$request->role === 'fournisseur' ? $request->ice : null,
             'city_id'=>$request->role === 'fournisseur' ? $request->city_id : null,
             'status'=>$request->role === 'fournisseur' ? 'en attente' : null,
-            'password_confirmation'=>$request->password_confirmation,
         ]);
 
         Auth::login($user);
