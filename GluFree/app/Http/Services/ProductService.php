@@ -24,6 +24,6 @@ class ProductService
                 $q->where('city_id', $city);
             });
         }
-        return $query->paginate(12)->withQueryString();
+        return $query->get();
     }
 }    
