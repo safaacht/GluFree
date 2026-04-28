@@ -70,6 +70,11 @@
                 @endforeach
             </tbody>
         </table>
+        @if(method_exists($products, 'hasPages') && $products->hasPages())
+        <div class="px-10 py-6 border-t border-stone-50">
+            {{ $products->links() }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection

@@ -95,6 +95,11 @@
                 @endforelse
             </tbody>
         </table>
+        @if($fournisseurs->hasPages())
+        <div class="px-10 py-6 border-t border-stone-50">
+            {{ $fournisseurs->links() }}
+        </div>
+        @endif
     </div>
 
       {{-- Produits  --}}
@@ -130,6 +135,11 @@
                 @endforelse
             </tbody>
         </table>
+        @if($products->hasPages())
+        <div class="px-10 py-6 border-t border-stone-50">
+            {{ $products->links() }}
+        </div>
+        @endif
     </div>
 
 </div>
