@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('users', 'role')) {
+        if (!Schema::hasColumn('users', 'status')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->enum('role', ['client', 'fournisseur','admin'])
-                    ->default('client')
-                    ->after('email');
+                $table->enum('status',['en attente','accepté','refusé'])
+                    ->nullable()
+                    ->default('en attente');
             });
         }
     }
@@ -25,9 +25,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasColumn('users', 'role')) {
+        if (Schema::hasColumn('users', 'status')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('role');
+                $table->dropColumn('status');
             });
         }
     }

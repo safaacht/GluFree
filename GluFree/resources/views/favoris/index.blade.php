@@ -53,9 +53,11 @@
                                     </span>
                                 </div>
                                 
-                                <form action="{{'#' }}" method="POST" class="m-0">
+                                <form action="{{ route('panier.add', $product->id) }}" method="POST" class="m-0 flex items-center gap-2">
                                     @csrf
-                                    <button type="submit" class="w-12 h-12 bg-forest text-white rounded-2xl flex items-center justify-center hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-900/20 group/btn transform hover:scale-105 active:scale-95" title="Ajouter au panier">
+                                    <input type="hidden" name="fournisseur_id" value="{{ $product->fournisseurs->first()?->id }}">
+                                    <input type="hidden" name="prix" value="{{ $prix }}">
+                                    <button type="submit" class="w-12 h-12 bg-forest text-white rounded-2xl flex items-center justify-center hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-900/20 group/btn transform hover:scale-105 active:scale-95 disabled:bg-stone-300 disabled:cursor-not-allowed disabled:hover:scale-100" title="Ajouter au panier">
                                         <i class="fa-solid fa-plus text-lg group-hover/btn:rotate-90 transition-transform duration-300"></i>
                                     </button>
                                 </form>

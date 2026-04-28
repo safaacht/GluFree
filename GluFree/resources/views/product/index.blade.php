@@ -61,8 +61,13 @@
                 @foreach($products as $product)
                     <div class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-forest/10 transition-all duration-500 border border-stone-100 flex flex-col h-full transform hover:-translate-y-1">
                         
-                       {{-- only for admin and fournisseur --}}
-                        @if(auth()->user() && (auth()->user()->role === 'admin' || (auth()->user()->role === 'fournisseur' && auth()->user()->status === 'accepté')))
+                        @php
+                            $canEdit = auth()->check() && (
+                                auth()->user()->role === 'admin' || 
+                                (auth()->user()->role === 'fournisseur' && auth()->user()->status === 'accepté' && $product->fournisseurs->contains(auth()->id()))
+                            );
+                        @endphp
+                        @if($canEdit)
                         <div class="absolute top-4 right-4 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <a href="{{ route('product.edit', $product->id) }}" class="w-8 h-8 bg-white/90 text-stone-500 hover:text-blue-600 rounded-full flex items-center justify-center shadow-md backdrop-blur-md transition-colors" title="Modifier">
                                 <i class="fa-solid fa-pen text-xs"></i>
