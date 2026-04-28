@@ -50,6 +50,7 @@ class ProductController extends Controller
         $product->name=$request['name'];
         $product->description=$request['description'];
         $product->category_id=$request['category_id'];
+        $product->price=$request['price'];
         
         if ($request->hasFile('photo')) {
             $product->photo = $request->file('photo')->store('products', 'public');
@@ -88,6 +89,13 @@ class ProductController extends Controller
 
         $categories = Category::all();
         $product=Product::findOrFail($id);
+
+        if (auth()->user()->role === 'fournisseur') {
+            if (!$product->fournisseurs->contains(auth()->id())) {
+                return redirect()->route('product.index')->with('error', 'Vous n\'êtes pas autorisé à modifier ce produit.');
+            }
+        }
+
         return view('product.edit',compact('product', 'categories')); 
     
     }
@@ -102,9 +110,17 @@ class ProductController extends Controller
         }
 
         $product=Product::findOrFail($id);
+
+        if (auth()->user()->role === 'fournisseur') {
+            if (!$product->fournisseurs->contains(auth()->id())) {
+                return redirect()->route('product.index')->with('error', 'Vous n\'êtes pas autorisé à modifier ce produit.');
+            }
+        }
+
         $product->name=$request['name'];
         $product->description=$request['description'];
         $product->category_id=$request['category_id'];
+        $product->price=$request['price'];
         
         if ($request->hasFile('photo')) {
             $product->photo = $request->file('photo')->store('products', 'public');
@@ -134,6 +150,13 @@ class ProductController extends Controller
         }
 
         $product=Product::findOrFail($id);
+
+        if (auth()->user()->role === 'fournisseur') {
+            if (!$product->fournisseurs->contains(auth()->id())) {
+                return redirect()->route('product.index')->with('error', 'Vous n\'êtes pas autorisé à supprimer ce produit.');
+            }
+        }
+
         $product->delete();
         return redirect()->route('product.index')->with('success', 'Produit supprimé avec succès !');
     

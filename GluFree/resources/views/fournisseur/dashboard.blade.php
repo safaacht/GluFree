@@ -11,9 +11,15 @@
             <a href="{{ route('fournisseur.commandes') }}" class="border-2 border-forest text-forest px-6 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-forest hover:text-white transition-all flex items-center gap-2">
                 <i class="fa-solid fa-inbox"></i> Commandes reçues
             </a>
-            <a href="{{ route('product.create') }}" class="bg-forest text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg hover:bg-emerald-900 transition-all">
-                + Nouveau Produit
-            </a>
+            @if(auth()->user()->status === 'accepté')
+                <a href="{{ route('product.create') }}" class="bg-forest text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg hover:bg-emerald-900 transition-all">
+                    + Nouveau Produit
+                </a>
+            @else
+                <span title="Votre compte doit être approuvé pour ajouter des produits" class="bg-stone-300 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-sm cursor-not-allowed opacity-70">
+                    + Nouveau Produit
+                </span>
+            @endif
         </div>
     </div>
 
@@ -64,6 +70,11 @@
                 @endforeach
             </tbody>
         </table>
+        @if(method_exists($products, 'hasPages') && $products->hasPages())
+        <div class="px-10 py-6 border-t border-stone-50">
+            {{ $products->links() }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection
