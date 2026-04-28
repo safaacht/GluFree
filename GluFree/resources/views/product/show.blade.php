@@ -37,7 +37,13 @@
                         </form>
                     @endif
                 @endif
-                @if(auth()->user() && (auth()->user()->role === 'admin' || (auth()->user()->role === 'fournisseur' && auth()->user()->status === 'accepté')))
+                @php
+                    $canEdit = auth()->check() && (
+                        auth()->user()->role === 'admin' || 
+                        (auth()->user()->role === 'fournisseur' && auth()->user()->status === 'accepté' && $product->fournisseurs->contains(auth()->id()))
+                    );
+                @endphp
+                @if($canEdit)
                     <a href="{{ route('product.edit', $product->id) }}" class="bg-white text-forest border border-stone-200 px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-stone-50 transition-all shadow-sm">
                         <i class="fa-solid fa-pen mr-2"></i> Modifier
                     </a>
