@@ -21,6 +21,7 @@ class RegisterController extends Controller
             'name'=>$request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
+            'password_confirmation'=>Hash::make($request->password_confirmation),
             'role'=>$request->role,
             'tel'=>$request->tel,
             'cin'=>$request->role === 'fournisseur' ? $request->cin : null,
