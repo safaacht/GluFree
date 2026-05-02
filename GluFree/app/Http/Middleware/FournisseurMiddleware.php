@@ -14,9 +14,12 @@ class FournisseurMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-     public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->role==='fournisseur'){
+        if (Auth::check() && Auth::user()->role === 'fournisseur') {
+            if (Auth::user()->status !== 'accepté') {
+                return redirect()->back()->with('error', 'Votre compte est en attente de validation par l\'administrateur.');
+            }
             return $next($request);
         }    
 

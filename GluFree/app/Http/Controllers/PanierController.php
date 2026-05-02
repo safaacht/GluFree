@@ -41,7 +41,7 @@ class PanierController extends Controller
         $fournisseur_id = $request->input('fournisseur_id');
         $prix = $request->input('prix');
         
-        // Use a composite key or just id if supplier doesn't change
+        // using composite key or just id if supplier doesn't change
         $cartKey = $id . '_' . $fournisseur_id;
         $quantity = (int) $request->input('quantity', 1);
 
@@ -67,7 +67,7 @@ class PanierController extends Controller
     {
         $cart = session()->get('panier', []);
         if(isset($cart[$key])) {
-            // Re-check stock just to be safe
+            // Rechecking stock just to be safe
             $item = $cart[$key];
             $fp = FournisseurProduit::where('product_id', $item['product_id'])
                                     ->where('fournisseur_id', $item['fournisseur_id'])
