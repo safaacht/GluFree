@@ -33,28 +33,37 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="space-y-2">
                         <label for="name" class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">Nom du Produit</label>
-                        <input type="text" name="name" id="name" required placeholder="Ex: Farine de Riz Bio" 
-                            class="w-full bg-stone-50 border-none rounded-2xl px-6 py-4 text-forest placeholder:text-stone-300 focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none font-medium">
+                        <input type="text" name="name" id="name" required placeholder="Ex: Farine de Riz Bio" value="{{ old('name') }}"
+                            class="w-full bg-stone-50 border-none rounded-2xl px-6 py-4 text-forest placeholder:text-stone-300 focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none font-medium @error('name') ring-2 ring-red-500/50 @enderror">
+                        @error('name')
+                            <p class="text-red-500 text-[10px] font-bold mt-1 ml-1 uppercase">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="space-y-2">
                         <label for="category_id" class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">Catégorie</label>
                         <div class="relative">
                             <select name="category_id" id="category_id" required 
-                                class="w-full bg-stone-50 border-none rounded-2xl px-6 py-4 text-forest appearance-none focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none font-medium">
-                                <option value="" disabled selected>Choisir une catégorie</option>
+                                class="w-full bg-stone-50 border-none rounded-2xl px-6 py-4 text-forest appearance-none focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none font-medium @error('category_id') ring-2 ring-red-500/50 @enderror">
+                                <option value="" disabled {{ old('category_id') ? '' : 'selected' }}>Choisir une catégorie</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                 @endforeach
                             </select>
                             <i class="fa-solid fa-chevron-down absolute right-6 top-1/2 -translate-y-1/2 text-stone-300 pointer-events-none text-xs"></i>
                         </div>
+                        @error('category_id')
+                            <p class="text-red-500 text-[10px] font-bold mt-1 ml-1 uppercase">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="lg:col-span-2 space-y-2">
                         <label for="description" class="block text-[11px] font-bold uppercase tracking-widest text-stone-400 ml-1">Description</label>
                         <textarea name="description" id="description" rows="5" required placeholder="Décrivez les ingrédients, les bienfaits et les spécificités de votre produit..."
-                            class="w-full bg-stone-50 border-none rounded-2xl px-6 py-4 text-forest placeholder:text-stone-300 focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none font-medium resize-none"></textarea>
+                            class="w-full bg-stone-50 border-none rounded-2xl px-6 py-4 text-forest placeholder:text-stone-300 focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none font-medium resize-none @error('description') ring-2 ring-red-500/50 @enderror">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="text-red-500 text-[10px] font-bold mt-1 ml-1 uppercase">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -123,16 +132,22 @@
                     <div class="space-y-2">
                         <label for="price" class="block text-[11px] font-bold uppercase tracking-widest text-emerald-100/40 ml-1">Prix de Vente (DH)</label>
                         <div class="relative">
-                            <input type="number" step="0.01" name="price" id="price" required placeholder="0.00" 
-                                class="w-full bg-white/5 border-none rounded-2xl px-6 py-4 text-white placeholder:text-emerald-100/20 focus:ring-2 focus:ring-white/20 transition-all outline-none font-medium">
+                            <input type="number" step="0.01" name="price" id="price" required placeholder="0.00" value="{{ old('price') }}"
+                                class="w-full bg-white/5 border-none rounded-2xl px-6 py-4 text-white placeholder:text-emerald-100/20 focus:ring-2 focus:ring-white/20 transition-all outline-none font-medium @error('price') ring-2 ring-red-500/50 @enderror">
                             <span class="absolute right-6 top-1/2 -translate-y-1/2 text-emerald-100/40 font-bold">DH</span>
                         </div>
+                        @error('price')
+                            <p class="text-red-200 text-[10px] font-bold mt-1 ml-1 uppercase">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="space-y-2">
                         <label for="quantitéStock" class="block text-[11px] font-bold uppercase tracking-widest text-emerald-100/40 ml-1">Quantité en Stock</label>
-                        <input type="number" name="quantitéStock" id="quantitéStock" required placeholder="Ex: 50" 
-                            class="w-full bg-white/5 border-none rounded-2xl px-6 py-4 text-white placeholder:text-emerald-100/20 focus:ring-2 focus:ring-white/20 transition-all outline-none font-medium">
+                        <input type="number" name="quantitéStock" id="quantitéStock" required placeholder="Ex: 50" value="{{ old('quantitéStock') }}"
+                            class="w-full bg-white/5 border-none rounded-2xl px-6 py-4 text-white placeholder:text-emerald-100/20 focus:ring-2 focus:ring-white/20 transition-all outline-none font-medium @error('quantitéStock') ring-2 ring-red-500/50 @enderror">
+                        @error('quantitéStock')
+                            <p class="text-red-200 text-[10px] font-bold mt-1 ml-1 uppercase">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
