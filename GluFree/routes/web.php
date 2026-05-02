@@ -31,12 +31,14 @@ Route::controller(LoginController::class)->group(function(){
 });
 
 // Fournisseur
-Route::resource('fournisseur', FournisseurController::class);
-Route::resource('product', ProductController::class)->except(['index', 'show']);
+Route::middleware(['auth', 'fournisseur'])->group(function () {
+    Route::resource('fournisseur', FournisseurController::class);
+    Route::resource('product', ProductController::class)->except(['index', 'show']);
 
-// Fournisseur — commandes 
-Route::get('/fournisseur-commandes', [FournisseurController::class, 'commandes'])->name('fournisseur.commandes');
-Route::patch('/commande/{commande}/accepter', [CommandeController::class, 'accepter'])->name('commande.accepter');
+    // Fournisseur — commandes 
+    Route::get('/fournisseur-commandes', [FournisseurController::class, 'commandes'])->name('fournisseur.commandes');
+    Route::patch('/commande/{commande}/accepter', [CommandeController::class, 'accepter'])->name('commande.accepter');
+});
 
 // Visiteur
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
