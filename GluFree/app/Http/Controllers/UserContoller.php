@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserContoller extends Controller
 {
@@ -19,7 +21,7 @@ class UserContoller extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $user= new User();
         $user->name=$request['name'];
@@ -45,7 +47,7 @@ class UserContoller extends Controller
     }
 
 
-    public function update(Request $request, int $id)
+    public function update(UpdateUserRequest $request, int $id)
     {
         $user=User::findOrFail($id);
         $user->name=$request['name'];
@@ -79,7 +81,7 @@ class UserContoller extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,'.auth()->id()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.auth()->id()],
         ]);
         
         $user = auth()->user();

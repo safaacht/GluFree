@@ -6,13 +6,15 @@ use App\Models\FournisseurProduit;
 use App\Models\Commande;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreFournisseurRequest;
+use App\Http\Requests\UpdateFournisseurRequest;
 
 class FournisseurController extends Controller
 {
     public function index()
     {
-        $products         = collect();
-        $total_products   = 0;
+        $products = collect();
+        $total_products = 0;
         $chiffre_affaires = 0;
 
         if (auth()->check()) {
@@ -38,7 +40,7 @@ class FournisseurController extends Controller
         return view('fournisseur.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreFournisseurRequest $request)
     {
         $fournisseur= new Fournisseur();
         $fournisseur->name=$request['name'];
@@ -62,7 +64,7 @@ class FournisseurController extends Controller
         return view('fournisseur.edit',compact('fournisseur'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateFournisseurRequest $request, $id)
     {
         $fournisseur=Fournisseur::findOrFail($id);
         $fournisseur->name=$request['name'];
