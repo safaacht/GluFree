@@ -50,6 +50,7 @@
             <thead>
                 <tr class="bg-stone-50/50 border-b border-stone-100 text-stone-400 text-[10px] uppercase tracking-[0.2em]">
                     <th class="px-8 py-5">Nom</th>
+                    <th class="px-8 py-5">ICE</th>
                     <th class="px-8 py-5">Email</th>
                     <th class="px-8 py-5">Ville</th>
                     <th class="px-8 py-5">Statut</th>
@@ -60,6 +61,7 @@
                 @forelse($fournisseurs as $f)
                 <tr class="border-b border-stone-50 hover:bg-stone-50/30 transition">
                     <td class="px-8 py-5 font-serif text-forest">{{ $f->name }}</td>
+                    <td class="px-8 py-5 text-emerald-700 font-mono text-xs">{{ $f->ice ?? '-' }}</td>
                     <td class="px-8 py-5">{{ $f->email }}</td>
                     <td class="px-8 py-5">{{ $f->city?->name ?? '-' }}</td>
                     <td class="px-8 py-5">
@@ -91,7 +93,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="px-8 py-8 text-center text-stone-300 italic">Aucun fournisseur inscrit.</td></tr>
+                <tr><td colspan="6" class="px-8 py-8 text-center text-stone-300 italic">Aucun fournisseur inscrit.</td></tr>
                 @endforelse
             </tbody>
         </table>
